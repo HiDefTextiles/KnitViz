@@ -19,7 +19,7 @@ def render_pattern_image(name, pattern, output_dir, number_of_stitches):
     img = Image.new("RGBA", (width, height), (255, 255, 255, 0))
 
     # Loop through each row in the pattern
-    for row_idx, row in enumerate(pattern):
+    for row_idx, row in enumerate(reversed(pattern)):
         y = row_idx * gridsize  # Vertical position for each row
         x = 0
         for col_idx, instr in enumerate(row):
