@@ -9,8 +9,8 @@ between textiles, data visualization, and computational design.
 ## Features
 
 - **Pattern Parsing**: Reads and interprets knitting patterns in JSON format.
-- **Stitch Visualization**: Generates graphical representations of stitch sequences using ggplot2.
-- **Size Customization**: Easily adjust visualizations for different sizes.
+- **Stitch Visualization**: Generates graphical representations of stitch sequences using SVG 
+  images for each stitch type.
 - **Flexible Pattern Representation**: Handles complex patterns, including increases, decreases, and
   special stitch types.
 
@@ -35,14 +35,14 @@ between textiles, data visualization, and computational design.
 3. **Preprocess SVG Files**: Convert SVG files for each stitch type to PNG format using the
    preprocessing script:
    ```bash
-   python code/preprocess_svg.py
+   python preprocess_svg.py
    ```
 
 ### Usage
 
 1. **Add Your JSON Pattern File**:
    Place your JSON knitting pattern file in the `data/` directory (
-   e.g., [data/devil_helmet.json](data/devil_helmet.json)).
+   e.g., [devil_helmet.json](data/devil_helmet.json)).
 2. **Run the visualization script**: Generate the pattern visualization using the following command:
    ```bash   
    python main.py --pattern data/devil_helmet.json
@@ -51,7 +51,7 @@ between textiles, data visualization, and computational design.
 
 3. **View and Adjust Output**: The resulting images can be opened and reviewed in any image viewer.
    Helper lines and custom styling adjustments are available within `render_pattern_image` in
-   [KnitViz/renderer.py](renderer.py).
+   [renderer.py](KnitViz/renderer.py).
 
 ### Contributing
 
