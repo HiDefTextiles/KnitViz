@@ -51,7 +51,7 @@ between textiles, data visualization, and computational design.
 
 3. **View and Adjust Output**: The resulting images can be opened and reviewed in any image viewer.
    Helper lines and custom styling adjustments are available within `render_pattern_image` in
-   [renderer.py](KnitViz/renderer.py).
+   [renderer.py](knitviz/renderer.py).
 
 ### Contributing
 
