@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="60.793751mm"
+   width="20.264584mm"
    height="20.264584mm"
-   viewBox="0 0 60.793751 20.264584"
+   viewBox="0 0 20.264584 20.264584"
    version="1.1"
    id="svg5"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
@@ -24,13 +24,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="3.3638608"
-     inkscape:cx="-2.5268584"
-     inkscape:cy="64.211932"
+     inkscape:zoom="6.7277216"
+     inkscape:cx="2.0066229"
+     inkscape:cy="53.064027"
      inkscape:window-width="1720"
      inkscape:window-height="1369"
-     inkscape:window-x="2552"
-     inkscape:window-y="-5"
+     inkscape:window-x="4272"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -39,15 +39,21 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-21.014955,-17.082222)">
-    <path
-       id="rect111-8-7"
+     transform="translate(-25.017807,-29.244717)">
+    <rect
        style="fill:none;stroke:#cccccc;stroke-width:0.264583"
-       d="m 21.147246,17.214513 h 20 v 20 h -20 z m 40.529166,0 h 20 v 20 h -20 z m -20.264583,0 h 20 v 20 h -20 z" />
-    <path
-       id="path484-6"
-       style="fill:none;stroke:#000000;stroke-width:0.496403"
-       d="M 30.821065,34.084851 72.002593,20.342936 M 71.608269,34.084851 50.67409,27.659469 50.65358,34.293432"
-       sodipodi:nodetypes="ccccc" />
+       id="rect111"
+       width="20"
+       height="20"
+       x="25.150099"
+       y="29.377008" />
+    <g
+       id="g343"
+       transform="translate(-0.0434432)">
+      <path
+         id="path234"
+         style="fill:none;stroke:#000000;stroke-width:0.264583"
+         d="m 35.028911,38.922117 5.988896,6.3226 m 0.35147,-12.551731 -12.35147,12.551731 m 6.092965,-6.026936 0.03933,6.026936" />
+    </g>
   </g>
 </svg>
