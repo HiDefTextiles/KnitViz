@@ -162,7 +162,7 @@ cython_debug/
 .idea/
 
 # Temp files
-.swp
+*.swp
 
 # History files
 .Rhistory
@@ -219,3 +219,5 @@ renv/python/
 packrat/
 packrat.lock
 
+# Intermediate files
+png/

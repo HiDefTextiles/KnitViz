@@ -1,0 +1,4 @@
+Pillow
+cairosvg
+# Minimum Python version requirement
+python_version >= "3.6"
