@@ -1,7 +1,7 @@
 import os
 import cairosvg
 
-def convert_svg_to_png(svg_dir='svg', png_dir='png', scale=0.5):
+def convert_svg_to_png(svg_dir='svg', png_dir='png', scale=1):
     # Ensure the output directory exists
     os.makedirs(png_dir, exist_ok=True)
 
