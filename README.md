@@ -32,7 +32,7 @@
 3. View and adjust the ggplot output as needed for your pattern visualization.
 
 ### Contributing
-We welcome contributions! To propose enhancements or report issues, please use the [Issues](issues/) tab. Suggestions on supporting additional pattern formats or visualizations are especially appreciated.
+We welcome contributions! To propose enhancements or report issues, please use the [Issues](../../issues/) tab. Suggestions on supporting additional pattern formats or visualizations are especially appreciated.
 
 ## License
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](LICENSE).
