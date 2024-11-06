@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="none.svg"
+   sodipodi:docname="P3tog.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="2.3786088"
-     inkscape:cx="-115.19339"
-     inkscape:cy="82.401108"
+     inkscape:zoom="6.7277216"
+     inkscape:cx="-16.870496"
+     inkscape:cy="53.064027"
      inkscape:window-width="1720"
      inkscape:window-height="1369"
      inkscape:window-x="4272"
@@ -41,11 +41,24 @@
      id="layer1"
      transform="translate(-25.017807,-29.244717)">
     <rect
-       style="fill:#cccccc;stroke:#cccccc;stroke-width:0.264583"
+       style="fill:none;stroke:#cccccc;stroke-width:0.264583"
        id="rect111"
        width="20"
        height="20"
        x="25.150099"
        y="29.377008" />
+    <g
+       id="g343"
+       transform="translate(-0.0434432)">
+      <path
+         id="path234"
+         style="fill:none;stroke:#000000;stroke-width:0.265;stroke-dasharray:none"
+         d="m 35.028911,38.922117 5.988896,6.3226 m 0.35147,-12.551731 -12.35147,12.551731 m 6.092965,-6.026936 3e-6,4.729134"
+         sodipodi:nodetypes="cccccc" />
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.265;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 32.220213,45.205152 h 5.859772"
+       id="path230" />
   </g>
 </svg>
