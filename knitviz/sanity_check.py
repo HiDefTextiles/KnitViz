@@ -16,6 +16,13 @@ def sanity_check(instructions, stitch_counts, repeated, stitches_on_needle, stit
                 else:
                     raise ValueError(f"Unknown stitch instruction {instr}")
 
+        # Check for a list with two elements, where the second element is an integer (repeated instruction)
+        if len(instr) == 2 and isinstance(instr[1], int):
+            sub_in, sub_out = calculate_stitches(instr[0], stitch_mapping)
+            total_in = sub_in * instr[1]
+            total_out = sub_out * instr[1]
+            return total_in, total_out
+
         # Recursive case: if the instruction is a list, calculate the sum of 'in' and 'out' for each nested item
         total_in, total_out = 0, 0
         for sub_instr in instr:
@@ -30,6 +37,8 @@ def sanity_check(instructions, stitch_counts, repeated, stitches_on_needle, stit
 
     # Loop through instructions and stitch_counts to accumulate incoming and outgoing stitches
     for instr, count in zip(instructions, stitch_counts):
+        if count == 0:
+            continue
         instr_in, instr_out = calculate_stitches(instr, stitch_mapping)
         incoming_stitches += instr_in * count
         outgoing_stitches += instr_out * count

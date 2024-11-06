@@ -6,8 +6,15 @@ def display_instructions_header(instructions):
     def format_instruction(instr):
         # If the instruction is a list, recursively format each item
         if isinstance(instr, list):
-            # Format each sub-item in the list, then join them with ", "
-            return f"({','.join(format_instruction(sub_instr) for sub_instr in instr)})"
+            if len(instr) == 2 and isinstance(instr[1], int):
+                if isinstance(instr[0], list):
+                    return f"({format_instruction(instr[0])}){instr[1]}"
+                elif instr[0] in ['K', 'P']:
+                    return f"{instr[0]}{instr[1]}"
+                else:
+                    return f"{instr[0]}*{instr[1]}"
+            else:
+                return f"({','.join(format_instruction(sub_instr) for sub_instr in instr)})"
         else:
             # If the instruction is a string (not a list), return it as is
             return instr
@@ -15,7 +22,7 @@ def display_instructions_header(instructions):
     instructions = [format_instruction(instr) for instr in instructions]
 
     # Build the row with dynamic spacing
-    row_data = ['Row', 'stitches', 'RS'] + [ inst.rjust(3) for inst in instructions] + ['Repeat']
+    row_data = ['Row', 'stitches', 'RS'] + [inst.rjust(3) for inst in instructions] + ['Repeat']
     spaces = [len(col) for col in row_data]
 
     # Join and print the formatted row
@@ -47,7 +54,7 @@ def print_to_console(name, pattern, instructions, stitch_mapping):
     print("-" * 50)
     print(f"Pattern for {name}:")
     spaces = display_instructions_header(instructions)
-    row_number = 1
+    row_number = 0
     stitches_on_needle, max_stitches = 0, 0
     for (stitch_counts, repeat_factor, side) in pattern["rows"]:
         stitch_counts = [stitch_counts[i] for i in indices]  # Skip the "none" instructions
@@ -57,6 +64,8 @@ def print_to_console(name, pattern, instructions, stitch_mapping):
 
         if incoming_stitches > max_stitches:
             max_stitches = incoming_stitches
+        if outgoing_stitches > max_stitches:
+            max_stitches = outgoing_stitches
 
         # Display in console
         display_instructions_row(row_number, stitch_counts, repeat_factor, incoming_stitches,
@@ -69,6 +78,22 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
     instructions = part_data["instructions"]
     sizes = part_data["sizes"]
 
+    def unpack_instruction(instr):
+        if isinstance(instr, list):
+            # Check if the list has a sublist followed by a digit (e.g., [['K', 'P'], 3])
+            if len(instr) == 2 and isinstance(instr[1], int):
+                if isinstance(instr[0], list):
+                    # Repeat the entire sublist `instr[1]` times and flatten the result
+                    return [item for _ in range(instr[1]) for item in unpack_instruction(instr[0])]
+                elif isinstance(instr[0], str):
+                    # If it's a string followed by a digit (e.g., ['K', 3]), repeat the string
+                    return [instr[0]] * instr[1]
+            else:
+                # Recursively unpack each sub-instruction and flatten the result
+                return [item for sub_instr in instr for item in unpack_instruction(sub_instr)]
+        else:
+            return [instr]  # Return as a single-item list for consistency
+
     for size_name, size_data in sizes.items():
         max_stitches = print_to_console(f"{name}_{size_name}", size_data, instructions,
                                         stitch_mapping)
@@ -77,8 +102,21 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
         for (stitch_counts, repeat_factor, side) in size_data["rows"]:
             # Keep track of the pattern for rendering
             for _ in range(repeat_factor):
-                row = [instr for instr, count in zip(instructions, stitch_counts)
-                       for _ in range(count)]
+                row = [item for instr, count in zip(instructions, stitch_counts) for item in
+                       unpack_instruction(instr) for _ in range(count)]
+
+                if len(row) < max_stitches:
+                    remaining_stitches = max_stitches - len(row)
+                    left_stitches = remaining_stitches // 2
+                    right_stitches = remaining_stitches - left_stitches
+                    # add half of the remaining stitches to the left side, then the rest to the right side
+                    row = ["none"] * left_stitches + row + ["none"] * right_stitches
+                elif len(row) > max_stitches:
+                    assert len(row) == max_stitches, "Mismatch between row length and max stitches"
+                if not all(isinstance(item, str) for item in row):
+                    print(row)
+
+                assert all(isinstance(item, str) for item in row), "Pattern must consist of strings"
                 pattern.append((row, side))
 
         # Render the pattern to an image
