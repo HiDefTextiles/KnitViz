@@ -25,7 +25,7 @@ def render_pattern_image(name, pattern, output_dir, number_of_stitches, stitch_m
         for col_idx, instr in enumerate(row if side else reversed(row)):
             RS_stitch = instr if side else stitch_mapping[instr]['WS']
             png_path = os.path.join(png_dir, f"{RS_stitch}.png")
-            instr_image = load_png_image(png_path) or empty_cell
+            instr_image = load_png_image(png_path)
 
             # Paste the image at the calculated position
             img.paste(instr_image, (x, y), instr_image.convert("RGBA"))
