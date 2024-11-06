@@ -7,7 +7,7 @@ def load_png_image(png_path):
     return Image.open(png_path)
 
 
-def render_pattern_image(name, pattern, output_dir, number_of_stitches):
+def render_pattern_image(name, pattern, output_dir, number_of_stitches, stitch_mapping):
     png_dir = 'png'  # Directory containing pre-generated PNG files
     empty_path = os.path.join(png_dir, "none.png")  # Path to baseline empty cell
     empty_cell = load_png_image(empty_path)
@@ -19,11 +19,12 @@ def render_pattern_image(name, pattern, output_dir, number_of_stitches):
     img = Image.new("RGBA", (width, height), (255, 255, 255, 0))
 
     # Loop through each row in the pattern
-    for row_idx, row in enumerate(reversed(pattern)):
+    for row_idx, (row, side) in enumerate(reversed(pattern)):
         y = row_idx * gridsize  # Vertical position for each row
         x = 0
-        for col_idx, instr in enumerate(row):
-            png_path = os.path.join(png_dir, f"{instr}.png")
+        for col_idx, instr in enumerate(row if side else reversed(row)):
+            RS_stitch = instr if side else stitch_mapping[instr]['WS']
+            png_path = os.path.join(png_dir, f"{RS_stitch}.png")
             instr_image = load_png_image(png_path) or empty_cell
 
             # Paste the image at the calculated position
@@ -34,7 +35,7 @@ def render_pattern_image(name, pattern, output_dir, number_of_stitches):
 
     # Draw red helper lines every 10 columns
     draw = ImageDraw.Draw(img)
-    for col in range(10, len(pattern[0]), 10):
+    for col in range(10, len(pattern[0][0]), 10):
         x = col * gridsize
         draw.line([(x, 0), (x, height)], fill="red", width=1)
 

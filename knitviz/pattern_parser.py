@@ -1,14 +1,18 @@
 from .sanity_check import sanity_check
 from .renderer import render_pattern_image
 
+
 def display_instructions_header(instructions):
     action_line = "Row    stitches   " + "   ".join(
-        f"{instr:>5}" for instr in instructions) + "    Repeat"
+        f"{instr:>5}" for instr in instructions if instr != 'none') + "    Repeat"
     print(action_line)
 
-def display_instructions_row(row_number, stitch_counts, repeat_factor, incoming_stitches):
-    count_line = f"{row_number:>3}    ({incoming_stitches:>6})   " + "   ".join(
-        f"{count:>5}" for count in stitch_counts) + f"{repeat_factor:>9}x"
+
+def display_instructions_row(row_number, stitch_counts, instructions, repeat_factor,
+                             incoming_stitches, side):
+    count_line = (f"{row_number:>3}    ({incoming_stitches:>6}) {'RS' if side else 'WS'}" +
+                  "   ".join(f"{count:>5}" for inst, count in zip(instructions, stitch_counts) if
+                             inst != 'none') + f"{repeat_factor:>9}x")
     print(count_line)
 
 
@@ -20,14 +24,12 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
         print("-" * 50)
         print(f"Pattern for {name} - {size_name}:")
 
-        stitches_on_needle = size_data['cast_on']
-        print(f"Cast on {stitches_on_needle} stitches")
-        max_stitches = stitches_on_needle
+        stitches_on_needle, max_stitches = 0, 0
 
         pattern = []
         display_instructions_header(instructions)
         row_number = 1
-        for (stitch_counts, repeat_factor) in size_data["rows"]:
+        for (stitch_counts, repeat_factor, side) in size_data["rows"]:
             incoming_stitches, outgoing_stitches = sanity_check(instructions, stitch_counts,
                                                                 repeat_factor > 1,
                                                                 stitches_on_needle, stitch_mapping)
@@ -37,14 +39,16 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
                 max_stitches = incoming_stitches
 
             # Display in console
-            display_instructions_row(row_number, stitch_counts, repeat_factor, incoming_stitches)
+            display_instructions_row(row_number, stitch_counts, instructions, repeat_factor,
+                                     incoming_stitches, side)
             row_number += repeat_factor
 
             # Keep track of the pattern for rendering
             for _ in range(repeat_factor):
                 row = [instr for instr, count in zip(instructions, stitch_counts)
                        for _ in range(count)]
-                pattern.append(row)
+                pattern.append((row, side))
 
         # Render the pattern to an image
-        render_pattern_image(f"{name}_{size_name}", pattern, output_dir, max_stitches)
+        render_pattern_image(f"{name}_{size_name}", pattern, output_dir, max_stitches,
+                             stitch_mapping)
