@@ -80,7 +80,7 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
 
     def unpack_instruction(instr):
         if isinstance(instr, list):
-            # Check if the list has a sublist followed by a digit (e.g., [['K', 'P'], 3])
+            # Check if the list has a sublist followed by a digit (e.g., [['YO', 'K'], 4])
             if len(instr) == 2 and isinstance(instr[1], int):
                 if isinstance(instr[0], list):
                     # Repeat the entire sublist `instr[1]` times and flatten the result
@@ -98,12 +98,17 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
         max_stitches = print_to_console(f"{name}_{size_name}", size_data, instructions,
                                         stitch_mapping)
 
+        # Unpack any nested instructions, to simplify the rendering process
+        instructions_unpacked = [unpack_instruction(instr) for instr in instructions]
+
         pattern = []
         for (stitch_counts, repeat_factor, side) in size_data["rows"]:
             # Keep track of the pattern for rendering
             for _ in range(repeat_factor):
-                row = [item for instr, count in zip(instructions, stitch_counts) for item in
-                       unpack_instruction(instr) for _ in range(count)]
+                row = [instr for instr, count in zip(instructions_unpacked, stitch_counts) for _ in
+                       range(count)]
+                # row is a list of lists, so we need to flatten it
+                row = [item for sublist in row for item in sublist]
 
                 if len(row) < max_stitches:
                     remaining_stitches = max_stitches - len(row)
