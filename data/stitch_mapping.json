@@ -1,6 +1,8 @@
 {
   "CO": {"in": 0, "out": 1, "alias": "cast on", "WS": "CO"  },
   "BO": {"in": 1, "out": 0, "alias": "bind off", "WS": "BO" },
+  "_BO": {"in": 1, "out": 1, "alias": "last stitch after bind off", "WS": "BO_" },
+  "BO_": {"in": 1, "out": 1, "alias": "last stitch after bind off", "WS": "_BO" },
   "K": {"in": 1, "out": 1, "alias": "knit", "WS": "P" },
   "P": {"in": 1, "out": 1, "alias": "purl", "WS": "K" },
   "K2tog": {"in": 2, "out": 1, "alias": "knit 2 together", "WS": "P2tog" },
