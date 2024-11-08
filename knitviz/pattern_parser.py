@@ -22,7 +22,7 @@ def display_instructions_header(instructions):
     instructions = [format_instruction(instr) for instr in instructions]
 
     # Build the row with dynamic spacing
-    row_data = ['Row', 'stitches', 'RS'] + [inst.rjust(3) for inst in instructions] + ['Repeat']
+    row_data = ['Row', 'stitches', '  '] + [inst.rjust(3) for inst in instructions] + ['Repeat']
     spaces = [len(col) for col in row_data]
 
     # Join and print the formatted row
@@ -110,14 +110,6 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
                 # row is a list of lists, so we need to flatten it
                 row = [item for sublist in row for item in sublist]
 
-                if len(row) < max_stitches:
-                    remaining_stitches = max_stitches - len(row)
-                    left_stitches = remaining_stitches // 2
-                    right_stitches = remaining_stitches - left_stitches
-                    # add half of the remaining stitches to the left side, then the rest to the right side
-                    row = ["none"] * left_stitches + row + ["none"] * right_stitches
-                elif len(row) > max_stitches:
-                    assert len(row) == max_stitches, "Mismatch between row length and max stitches"
                 if not all(isinstance(item, str) for item in row):
                     print(row)
 
@@ -126,4 +118,4 @@ def process_pattern(stitch_mapping, name, part_data, output_dir):
 
         # Render the pattern to an image
         render_pattern_image(f"{name}_{size_name}", pattern, output_dir, max_stitches,
-                             stitch_mapping)
+                             stitch_mapping, part_data["align"])

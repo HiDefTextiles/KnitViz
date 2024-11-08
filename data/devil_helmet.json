@@ -3,6 +3,7 @@
   "main": {
     "instructions": ["CO","K", "YO", "K", "K3tog", "K", "YO", "K", "YO", "K", "K3tog", "K", "YO",
       "K", "YO", "K", "K3tog", "K", "YO", "K"],
+    "align": "left",
     "sizes": {
       "small": {
         "rows": [

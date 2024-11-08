@@ -7,7 +7,8 @@ def load_png_image(png_path):
     return Image.open(png_path)
 
 
-def render_pattern_image(name, pattern, output_dir, number_of_stitches, stitch_mapping):
+def render_pattern_image(name, pattern, output_dir, number_of_stitches, stitch_mapping, alignment):
+    assert alignment in ["left", "center", "right"], "Alignment must be left, right or center"
     png_dir = 'png'  # Directory containing pre-generated PNG files
     empty_path = os.path.join(png_dir, "none.png")  # Path to baseline empty cell
     empty_cell = load_png_image(empty_path)
@@ -22,7 +23,27 @@ def render_pattern_image(name, pattern, output_dir, number_of_stitches, stitch_m
     for row_idx, (row, side) in enumerate(reversed(pattern)):
         y = row_idx * gridsize  # Vertical position for each row
         x = 0
-        for col_idx, instr in enumerate(row if side else reversed(row)):
+        remaining_stitches = number_of_stitches - len(row)
+
+        # Make sure that the row is reversed if it's for the WS (i.e. side=False)
+        row = row if side else list(reversed(row))
+
+        if remaining_stitches < 0:
+            raise ValueError(f"Row {row_idx} has {remaining_stitches} more stitches than expected")
+        elif remaining_stitches > 0:
+            # append empty cells to the row based on alignment
+            if alignment == "right":
+                left_padding = remaining_stitches
+                right_padding = 0
+            elif alignment == "left":
+                left_padding = 0
+                right_padding = remaining_stitches
+            else: # center
+                left_padding = remaining_stitches // 2
+                right_padding = remaining_stitches - left_padding
+            row = ["none"] * left_padding + row + ["none"] * right_padding
+
+        for col_idx, instr in enumerate(row):
             RS_stitch = instr if side else stitch_mapping[instr]['WS']
             png_path = os.path.join(png_dir, f"{RS_stitch}.png")
             instr_image = load_png_image(png_path)
