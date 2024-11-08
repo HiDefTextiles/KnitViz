@@ -5,8 +5,12 @@
   "P": {"in": 1, "out": 1, "alias": "purl", "WS": "K" },
   "K2tog": {"in": 2, "out": 1, "alias": "knit 2 together", "WS": "P2tog" },
   "K3tog": {"in": 3, "out": 1, "alias": "knit 3 together", "WS": "P3tog" },
+  "K4tog": {"in": 4, "out": 1, "alias": "knit 4 together", "WS": "P4tog" },
   "P2tog": {"in": 2, "out": 1, "alias": "purl 2 together", "WS": "K2tog" },
   "P3tog": {"in": 3, "out": 1, "alias": "purl 3 together", "WS": "K3tog" },
+  "P4tog": {"in": 4, "out": 1, "alias": "purl 4 together", "WS": "K4tog" },
   "YO": {"in": 0, "out": 1, "alias": "yarn over", "WS": "YO" },
+  "SLwyib":  {"in": 1, "out": 1, "alias": "slip with yarn in back", "WS": "SLwyif" },
+  "SLwyif":  {"in": 1, "out": 1, "alias": "slip with yarn in front", "WS": "SLwyib" },
   "none": {"in": 0, "out": 0, "alias": "empty", "WS": "none" }
 }
