@@ -222,3 +222,4 @@ packrat.lock
 # Intermediate files
 png/
 figures/
+tmp.R
